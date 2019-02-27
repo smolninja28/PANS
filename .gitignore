@@ -1,0 +1,19 @@
+# Folder ignores
+/.vscode
+/.git
+/bin
+/firmware
+/include/display
+/include/pros
+/include/okapi
+
+# File ignores
+common.mk
+compile_commands.json
+Makefile
+project.pros
+include/api.h
+include/main.h
+src/autonomous.cpp
+src/initialize.cpp
+src/opcontrol.cpp
