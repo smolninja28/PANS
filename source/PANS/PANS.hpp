@@ -3,7 +3,7 @@
 namespace PANS
 {
   //FUNCTIONALITY DEFINES//
-  #define ConfigScreen //pre-game initialization robot configuration screen module
+  #define CONFIG_SCREEN_MODULE //pre-game initialization robot configuration screen module
 
   //core data
   enum class ReturnResult_e_t
