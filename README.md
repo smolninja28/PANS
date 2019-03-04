@@ -4,7 +4,7 @@ PANS is a code library for PROS that aims to simplify some difficult tasks by cr
 This system is built using the Purdue Robotics Operating System (PROS) for V5, and thus can only be used in that environment.  This library will not work with legacy, Cortex-Based control systems.
 https://pros.cs.purdue.edu/
 
-PANS is designed to be modular, so only the systems in use are compiled.  Options are configured through define macros in the main PANS header file.
+PANS is designed to be modular, so only the systems in use are compiled.  Simply include the headers for the systems you want to use!
 
 Some modules require the use of OkapiLib, while others use PROS' LVGL library.
 https://pros.cs.purdue.edu/v5/okapi/index.html
