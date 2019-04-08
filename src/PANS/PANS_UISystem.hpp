@@ -17,26 +17,26 @@ namespace PANS
       //setup this screen - this will invoke setup on all children
       virtual void Setup() const;
     };
-    class Screen : UINode
+    class Screen:public UINode
     {
     public:
       //child elements of the screen
-      std::vector<Element> childElements;
+      std::vector<Element> children;
     };
-    class Element : UINode
+    class Element:public UINode
     {
     public:
       //position
       int xPos;
       int yPos;
     };
-    class ConfigWindow : Screen
+    class ConfigWindow:public Screen
     {
     public:
       //title for the config screen
       std::string title;
     };
-    class Button : Element
+    class Button:public Element
     {
     public:
       //title for the button
@@ -47,6 +47,8 @@ namespace PANS
     class UIManager
     {
     public:
+      //the current screen being displayed
+      Screen currentScreen;
     };
   }
 }

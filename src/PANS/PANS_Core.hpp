@@ -6,6 +6,7 @@ namespace PANS
   enum class ReturnResult_e_t
   {
     Success,
+    InvaildParameters,
     GenericFailure
   };
 
