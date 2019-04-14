@@ -1,42 +1,42 @@
-#pragma once
-#include "PANS_Core.hpp"
-
-//module define
-#define PANS_MODULE_UISYSTEM
+//check if ui system module is active
+#ifdef PANS_MODULE_UISYSTEM
+#include "UISystem.hpp"
 
 namespace PANS
 {
   namespace UISystem
   {
     //classes
-    class UINode
-    {
-    public:
-      //Destroy this screen - this will invoke destroy on all children
-      virtual void Destroy() const;
-      //setup this screen - this will invoke setup on all children
-      virtual void Setup() const;
-    };
-    class Screen:public UINode
+    class Screen : UINode
     {
     public:
       //child elements of the screen
       std::vector<Element> children;
+      //destroy this screen
+      void Destroy()
+      {
+
+      }
+      //setup this screen
+      void Setup()
+      {
+
+      }
     };
-    class Element:public UINode
+    class Element : UINode
     {
     public:
       //position
       int xPos;
       int yPos;
     };
-    class ConfigWindow:public Screen
+    class ConfigWindow : Screen
     {
     public:
       //title for the config screen
       std::string title;
     };
-    class Button:public Element
+    class Button : Element
     {
     public:
       //title for the button
@@ -52,3 +52,4 @@ namespace PANS
     };
   }
 }
+#endif

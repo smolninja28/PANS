@@ -1,4 +1,4 @@
-#include "PANS_Core.hpp"
+#include "Core.hpp"
 
 namespace PANS
 {
