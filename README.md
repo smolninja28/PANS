@@ -6,7 +6,7 @@ https://pros.cs.purdue.edu/
 
 PANS is designed to be modular, so only the systems in use are compiled.  Simply include the headers for the systems you want to use!
 
-Some modules require the use of OkapiLib, while others use PROS' LVGL library.
+PANS requires the use of OkapiLib, and uses the LVGL library embedded within PROS.
 https://pros.cs.purdue.edu/v5/okapi/index.html
 
 PANS is completely open source, so anyone can use, modify, and distribute this code.
