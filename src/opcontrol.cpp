@@ -1,5 +1,6 @@
 #include "PANS/Core.hpp"
 #include "PANS/UISystem.hpp"
+#include "PANS/Vision.hpp"
 
 Controller master;
 
