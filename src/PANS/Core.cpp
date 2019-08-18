@@ -2,12 +2,20 @@
 
 namespace PANS
 {
+  namespace Data
+  {
+    Controller masterController;
+  }
+
   namespace Core
   {
     //initialization
-    ReturnResult_e_t Initialize()
+    ReturnResult Initialize(Controller controllerMaster)
     {
-      return ReturnResult_e_t::Success;
+      //set data
+      PANS::Data::masterController = controllerMaster;
+
+      return ReturnResult::Success;
     }
   }
 }

@@ -3,17 +3,22 @@
 
 namespace PANS
 {
+  namespace Data
+  {
+    extern Controller masterController;
+  }
   //core data
-  enum class ReturnResult_e_t
+  enum class ReturnResult
   {
     Success,
     InvaildParameters,
-    GenericFailure
+    GenericFailure,
+    UserAborted
   };
 
   namespace Core
   {
     //initialization
-    ReturnResult_e_t Initialize();
+    ReturnResult Initialize(Controller controllerMaster);
   }
 }
