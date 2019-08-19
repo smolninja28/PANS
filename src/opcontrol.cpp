@@ -1,6 +1,6 @@
 #include "PANS/Core.hpp"
 #include "PANS/UISystem.hpp"
-#include "PANS/Vision.hpp"
+#include "PANS/VisionSystem.hpp"
 
 Controller master;
 
@@ -16,9 +16,12 @@ void Option2()
 int foo = 0; //random number for testing
 void opcontrol()
 {
+  //set the controller
   master = Controller(ControllerId::master);
+  //initialize all systems
   PANS::Core::Initialize(master);
   PANS::UISystem::Initialize();
+  PANS::VisionSystem::Initialize(1, master);
   //test
   PANS::UISystem::MessageController(master, "Entering Opcontrol");
   PANS::UISystem::MessageBrain("Welcome to Opcontrol");
@@ -35,6 +38,21 @@ void opcontrol()
     {
       PANS::UISystem::ConfigDialog("How will we do this match?", "We will kick butt", &Option1, "We will crash and burn", &Option2);
     }
-    pros::delay(200);
+    //test rendering
+    if(master.getDigital(ControllerDigital::down))
+    {
+      PANS::UISystem::PrepareForRendering();
+      PANS::UISystem::RenderObject(480, 240, 0, 0);
+    }
+    if(master.getDigital(ControllerDigital::left))
+    {
+      PANS::UISystem::StopRendering();
+    }
+    //test visualization
+    if(master.getDigital(ControllerDigital::B))
+    {
+      PANS::VisionSystem::VisualizeSignature(1, 3);
+    }
+    pros::delay(20);
   }
 }

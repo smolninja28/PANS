@@ -1,5 +1,4 @@
 #include "UISystem.hpp"
-#include <deque>
 
 namespace PANS
 {
@@ -18,8 +17,10 @@ namespace PANS
     std::deque<std::string> messageStrings(10); //vector to store all messages posted to the brain
     void (*option0Callback)(); //the callback for option 0
     void (*option1Callback)(); //the callback for option 1
+    //rendering variables
+    std::vector<lv_obj_t*> renderObjects;
 
-    lv_res_t Option0Click(lv_obj_t* btn)
+    void CloseDialog()
     {
       doneDialog = true; //the dialog can close
       MessageController(Data::masterController, ""); //clear the controller screen
@@ -32,22 +33,17 @@ namespace PANS
       //set the title label to empty
       lv_label_set_text(labelTitle, ""); //set text
       lv_obj_align(labelTitle, NULL, LV_ALIGN_IN_TOP_MID, 0, 0); //realign
+    }
+
+    lv_res_t Option0Click(lv_obj_t* btn)
+    {
+      CloseDialog(); //close the dialog ui
       (*option0Callback)(); //execute the callback
       return LV_RES_OK;
     }
     lv_res_t Option1Click(lv_obj_t* btn)
     {
-      doneDialog = true; //the dialog can close
-      MessageController(Data::masterController, ""); //clear the controller screen
-      //set the button labels to empty
-      lv_label_set_text(labelOption0, "");
-      lv_label_set_text(labelOption1, "");
-      //deactivate the buttons
-      lv_btn_set_state(btnOption0, LV_BTN_STATE_INA);
-      lv_btn_set_state(btnOption1, LV_BTN_STATE_INA);
-      //set the title label to empty
-      lv_label_set_text(labelTitle, ""); //set text
-      lv_obj_align(labelTitle, NULL, LV_ALIGN_IN_TOP_MID, 0, 0); //realign
+      CloseDialog(); //close the dialog ui
       (*option1Callback)(); //execute the callback
       return LV_RES_OK;
     }
@@ -178,6 +174,48 @@ namespace PANS
     {
       lv_label_set_text(labelMessages, ""); //set text
       lv_obj_align(labelMessages, NULL, LV_ALIGN_IN_TOP_MID, 0, 0); //realign
+      return ReturnResult::Success;
+    }
+
+    //prepares the ui system for vision object rendering
+    ReturnResult PrepareForRendering()
+    {
+      ClearBrain(); //clear the brain of messages
+      return ReturnResult::Success;
+    }
+
+    //asks the ui system to render an object
+    ReturnResult RenderObject(int width, int height, int x, int y)
+    {
+      //create a new object
+      lv_obj_t* obj;
+      obj = lv_cont_create(lv_scr_act(), NULL);
+      //size it
+      lv_obj_set_size(obj, width, height);
+      //position it
+      lv_obj_set_pos(obj, x, y);
+      //add it to the vector
+      renderObjects.push_back(obj);
+      return ReturnResult::Success;
+    }
+
+    //asks the ui system to clear the screen of all rendered objects
+    ReturnResult ClearRendering()
+    {
+      int size = renderObjects.size(); //get the number of objects
+      for(int i = 0; i < size; ++i) //loop over all objects
+      {
+        lv_obj_del(renderObjects[i]); //delete the object
+      }
+      renderObjects.clear(); //empty the vector
+      return ReturnResult::Success;
+    }
+
+    //shuts down object rendering
+    ReturnResult StopRendering()
+    {
+      ClearRendering(); //clear off all objects
+      MessageBrain("Visualization completed."); //go back to messaging
       return ReturnResult::Success;
     }
   }
