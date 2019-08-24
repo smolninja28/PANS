@@ -21,7 +21,7 @@ void opcontrol()
   //initialize all systems
   PANS::Core::Initialize(master);
   PANS::UISystem::Initialize();
-  PANS::VisionSystem::Initialize(1, master);
+  PANS::VisionSystem::Initialize(1);
   //test
   PANS::UISystem::MessageController(master, "Entering Opcontrol");
   PANS::UISystem::MessageBrain("Welcome to Opcontrol");
@@ -34,24 +34,29 @@ void opcontrol()
       ++foo;
     }
     //open the test config
-    if(master.getDigital(ControllerDigital::up))
+    if(master.getDigital(ControllerDigital::Y))
     {
       PANS::UISystem::ConfigDialog("How will we do this match?", "We will kick butt", &Option1, "We will crash and burn", &Option2);
     }
-    //test rendering
+    //vision averaging test
+    if(master.getDigital(ControllerDigital::up))
+    {
+      std::vector<int> sigs(1);
+      sigs[0] = 1;
+      PANS::VisionSystem::StartSigAveraging(sigs);
+    }
     if(master.getDigital(ControllerDigital::down))
     {
-      PANS::UISystem::PrepareForRendering();
-      PANS::UISystem::RenderObject(480, 240, 0, 0);
+      PANS::VisionSystem::StopSigAveraging();
+    }
+    //test visualization
+    if(master.getDigital(ControllerDigital::right))
+    {
+      PANS::VisionSystem::VisualizeSignature(1);
     }
     if(master.getDigital(ControllerDigital::left))
     {
-      PANS::UISystem::StopRendering();
-    }
-    //test visualization
-    if(master.getDigital(ControllerDigital::B))
-    {
-      PANS::VisionSystem::VisualizeSignature(1, 3);
+      PANS::VisionSystem::VisualizeAveragedSignature(1);
     }
     pros::delay(20);
   }

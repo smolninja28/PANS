@@ -39,12 +39,16 @@ namespace PANS
     {
       CloseDialog(); //close the dialog ui
       (*option0Callback)(); //execute the callback
+      //message brain
+      MessageBrain("Dialog Completed, Left Option Chosen");
       return LV_RES_OK;
     }
     lv_res_t Option1Click(lv_obj_t* btn)
     {
       CloseDialog(); //close the dialog ui
       (*option1Callback)(); //execute the callback
+      //message brain
+      MessageBrain("Dialog Completed, Right Option Chosen");
       return LV_RES_OK;
     }
 
@@ -187,6 +191,8 @@ namespace PANS
     //asks the ui system to render an object
     ReturnResult RenderObject(int width, int height, int x, int y)
     {
+      //clear messages
+      ClearBrain();
       //create a new object
       lv_obj_t* obj;
       obj = lv_cont_create(lv_scr_act(), NULL);
@@ -208,6 +214,7 @@ namespace PANS
         lv_obj_del(renderObjects[i]); //delete the object
       }
       renderObjects.clear(); //empty the vector
+      ClearBrain(); //clear messages while we are at it
       return ReturnResult::Success;
     }
 
