@@ -1,5 +1,6 @@
 #pragma once
 #include "Core.hpp"
+#include <deque>
 
 namespace PANS
 {
@@ -15,5 +16,13 @@ namespace PANS
     ReturnResult MessageBrain(std::string text);
     //clears the screen of the brain
     ReturnResult ClearBrain();
+    //prepares the ui system for vision object rendering
+    ReturnResult PrepareForRendering();
+    //asks the ui system to render an object
+    ReturnResult RenderObject(int width, int height, int x, int y);
+    //asks the ui system to clear the screen of all rendered objects
+    ReturnResult ClearRendering();
+    //shuts down object rendering
+    ReturnResult StopRendering();
   }
 }
