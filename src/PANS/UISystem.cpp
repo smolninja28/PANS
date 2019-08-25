@@ -120,7 +120,7 @@ namespace PANS
       while(true)
       {
         //check if the controller has commanded us to abort dialog
-        if(Data::masterController.getDigital(ControllerDigital::X))
+        if(Data::masterController.getDigital(okapi::ControllerDigital::X))
         {
           MessageController(Data::masterController, ""); //clear the controller screen
           //set the button labels to empty
@@ -147,7 +147,7 @@ namespace PANS
     }
 
     //post a message to the controller.  Text must be 16 characters or less
-    ReturnResult MessageController(Controller controller, std::string text)
+    ReturnResult MessageController(okapi::Controller controller, std::string text)
     {
       //resize the string to fit on the screen
       text.resize(16, ' ');

@@ -224,7 +224,7 @@ namespace PANS
       {
         //clear the render screen of objects
         PANS::UISystem::ClearRendering();
-        if(Data::masterController.getDigital(ControllerDigital::X)) //check for abort
+        if(Data::masterController.getDigital(okapi::ControllerDigital::X)) //check for abort
         {
           PANS::UISystem::MessageController(Data::masterController, ""); //clear the controller
           //shutdown the rendering ui system
@@ -262,7 +262,7 @@ namespace PANS
       {
         //clear the render screen of objects
         PANS::UISystem::ClearRendering();
-        if(Data::masterController.getDigital(ControllerDigital::X)) //check for abort
+        if(Data::masterController.getDigital(okapi::ControllerDigital::X)) //check for abort
         {
           PANS::UISystem::MessageController(Data::masterController, ""); //clear the controller
           //shutdown the rendering ui system

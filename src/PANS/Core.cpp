@@ -4,13 +4,13 @@ namespace PANS
 {
   namespace Data
   {
-    Controller masterController;
+    okapi::Controller masterController;
   }
 
   namespace Core
   {
     //initialization
-    ReturnResult Initialize(Controller controllerMaster)
+    ReturnResult Initialize(okapi::Controller controllerMaster)
     {
       //set data
       PANS::Data::masterController = controllerMaster;

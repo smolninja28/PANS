@@ -1,8 +1,9 @@
+#include "main.h"
 #include "PANS/Core.hpp"
 #include "PANS/UISystem.hpp"
 #include "PANS/VisionSystem.hpp"
 
-Controller master;
+okapi::Controller master;
 
 //testing functions
 void Option1()
@@ -17,7 +18,7 @@ int foo = 0; //random number for testing
 void opcontrol()
 {
   //set the controller
-  master = Controller(ControllerId::master);
+  master = okapi::Controller(okapi::ControllerId::master);
   //initialize all systems
   PANS::Core::Initialize(master);
   PANS::UISystem::Initialize();
@@ -28,33 +29,33 @@ void opcontrol()
   while(true)
   {
     //post a test number
-    if(master.getDigital(ControllerDigital::A))
+    if(master.getDigital(okapi::ControllerDigital::A))
     {
       PANS::UISystem::MessageBrain(std::to_string(foo));
       ++foo;
     }
     //open the test config
-    if(master.getDigital(ControllerDigital::Y))
+    if(master.getDigital(okapi::ControllerDigital::Y))
     {
       PANS::UISystem::ConfigDialog("How will we do this match?", "We will kick butt", &Option1, "We will crash and burn", &Option2);
     }
     //vision averaging test
-    if(master.getDigital(ControllerDigital::up))
+    if(master.getDigital(okapi::ControllerDigital::up))
     {
       std::vector<int> sigs(1);
       sigs[0] = 1;
       PANS::VisionSystem::StartSigAveraging(sigs);
     }
-    if(master.getDigital(ControllerDigital::down))
+    if(master.getDigital(okapi::ControllerDigital::down))
     {
       PANS::VisionSystem::StopSigAveraging();
     }
     //test visualization
-    if(master.getDigital(ControllerDigital::right))
+    if(master.getDigital(okapi::ControllerDigital::right))
     {
       PANS::VisionSystem::VisualizeSignature(1);
     }
-    if(master.getDigital(ControllerDigital::left))
+    if(master.getDigital(okapi::ControllerDigital::left))
     {
       PANS::VisionSystem::VisualizeAveragedSignature(1);
     }
