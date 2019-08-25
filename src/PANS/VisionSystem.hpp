@@ -2,6 +2,7 @@
 #include "Core.hpp"
 #include "UISystem.hpp"
 #include <deque>
+#include <algorithm>
 
 namespace PANS
 {

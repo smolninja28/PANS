@@ -1,5 +1,6 @@
 #pragma once
 #include "Core.hpp"
+#include <vector>
 #include <deque>
 
 namespace PANS
@@ -10,8 +11,8 @@ namespace PANS
     ReturnResult Initialize();
     //make a config dialog on the brain screen. Title is the title for the screen, text is inside the button, calbacks execute upon selection
     ReturnResult ConfigDialog(std::string title, std::string option0, void (*callback0)(), std::string option1, void (*callback1)());
-    //post a message to the controller.  Text must be 16 characters or less
-    ReturnResult MessageController(okapi::Controller controller, std::string text);
+    //post a message to the controller.  Text must be 16 characters or less.  If master is false, partner controller is used
+    ReturnResult MessageController(std::string text, bool master = true);
     //appends a message to the brain
     ReturnResult MessageBrain(std::string text);
     //clears the screen of the brain
@@ -24,5 +25,7 @@ namespace PANS
     ReturnResult ClearRendering();
     //shuts down object rendering
     ReturnResult StopRendering();
+    //prints the robot's status to the screen as a message
+    ReturnResult PrintRobotStatus();
   }
 }

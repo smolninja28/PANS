@@ -2,6 +2,8 @@
 #include "PANS/Core.hpp"
 #include "PANS/UISystem.hpp"
 #include "PANS/VisionSystem.hpp"
+#include "../include/okapi/api.hpp"
+using namespace okapi;
 
 okapi::Controller master;
 
@@ -20,12 +22,10 @@ void opcontrol()
   //set the controller
   master = okapi::Controller(okapi::ControllerId::master);
   //initialize all systems
-  PANS::Core::Initialize(master);
   PANS::UISystem::Initialize();
   PANS::VisionSystem::Initialize(1);
   //test
-  PANS::UISystem::MessageController(master, "Entering Opcontrol");
-  PANS::UISystem::MessageBrain("Welcome to Opcontrol");
+  PANS::UISystem::PrintRobotStatus();
   while(true)
   {
     //post a test number

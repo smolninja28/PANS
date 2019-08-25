@@ -213,7 +213,7 @@ namespace PANS
     ReturnResult VisualizeSignature(int signature)
     {
       //set the controller text
-      PANS::UISystem::MessageController(Data::masterController, "Visual|Done:X");
+      PANS::UISystem::MessageController("Visual|Done:X");
       //clear the brain of messages
       PANS::UISystem::ClearBrain();
       //create a vision sensor reference
@@ -224,9 +224,9 @@ namespace PANS
       {
         //clear the render screen of objects
         PANS::UISystem::ClearRendering();
-        if(Data::masterController.getDigital(okapi::ControllerDigital::X)) //check for abort
+        if(Data::masterController.get_digital(pros::E_CONTROLLER_DIGITAL_X)) //check for abort
         {
-          PANS::UISystem::MessageController(Data::masterController, ""); //clear the controller
+          PANS::UISystem::MessageController(""); //clear the controller
           //shutdown the rendering ui system
           PANS::UISystem::StopRendering();
           return ReturnResult::Success; //begone
@@ -247,7 +247,7 @@ namespace PANS
     ReturnResult VisualizeAveragedSignature(int signature)
     {
       //set the controller text
-      PANS::UISystem::MessageController(Data::masterController, "Visual|Done:X");
+      PANS::UISystem::MessageController("Visual|Done:X");
       //clear the brain of messages
       PANS::UISystem::ClearBrain();
       //create a vision sensor reference
@@ -262,9 +262,9 @@ namespace PANS
       {
         //clear the render screen of objects
         PANS::UISystem::ClearRendering();
-        if(Data::masterController.getDigital(okapi::ControllerDigital::X)) //check for abort
+        if(Data::masterController.get_digital(pros::E_CONTROLLER_DIGITAL_X)) //check for abort
         {
-          PANS::UISystem::MessageController(Data::masterController, ""); //clear the controller
+          PANS::UISystem::MessageController(""); //clear the controller
           //shutdown the rendering ui system
           PANS::UISystem::StopRendering();
           StopSigAveraging(); //stop averaging

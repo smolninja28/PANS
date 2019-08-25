@@ -23,7 +23,7 @@ namespace PANS
     void CloseDialog()
     {
       doneDialog = true; //the dialog can close
-      MessageController(Data::masterController, ""); //clear the controller screen
+      MessageController(""); //clear the controller screen
       //set the button labels to empty
       lv_label_set_text(labelOption0, "");
       lv_label_set_text(labelOption1, "");
@@ -50,6 +50,36 @@ namespace PANS
       //message brain
       MessageBrain("Dialog Completed, Right Option Chosen");
       return LV_RES_OK;
+    }
+
+    ReturnResult PrintRobotStatus()
+    {
+      //create a string
+      std::string s;
+      //are we connected to field control
+      if(pros::competition::is_connected())
+      {
+        //are we disabled
+        if(pros::competition::is_disabled())
+        {
+          s.append("Connected|Disabled|");
+        }
+        else
+        {
+          s.append("Connected|Enabled|");
+        }
+
+        //what mode are we in
+        (pros::competition::is_autonomous()) ? s.append("Autonomous|") : s.append("Opcontrol|");
+      }
+      else
+      {
+        s.append("");
+      }
+      
+      //print it
+      MessageBrain(s);
+      return ReturnResult::Success;
     }
 
     //init
@@ -101,7 +131,7 @@ namespace PANS
     {
       doneDialog = false; //in dialog
       //set the text on the controller
-      MessageController(Data::masterController, "Config|Abort:X");
+      MessageController("Config|Abort:X");
       //set the title
       lv_label_set_text(labelTitle, title.c_str()); //set text
       lv_obj_align(labelTitle, NULL, LV_ALIGN_IN_TOP_MID, 0, 0); //realign
@@ -120,9 +150,9 @@ namespace PANS
       while(true)
       {
         //check if the controller has commanded us to abort dialog
-        if(Data::masterController.getDigital(okapi::ControllerDigital::X))
+        if(Data::masterController.get_digital(pros::E_CONTROLLER_DIGITAL_X))
         {
-          MessageController(Data::masterController, ""); //clear the controller screen
+          MessageController(""); //clear the controller screen
           //set the button labels to empty
           lv_label_set_text(labelOption0, "");
           lv_label_set_text(labelOption1, "");
@@ -147,12 +177,12 @@ namespace PANS
     }
 
     //post a message to the controller.  Text must be 16 characters or less
-    ReturnResult MessageController(okapi::Controller controller, std::string text)
+    ReturnResult MessageController(std::string text, bool master)
     {
       //resize the string to fit on the screen
       text.resize(16, ' ');
-      //send the message to the controller
-      controller.setText(0, 0, text);
+      //send the message to the proper controller
+      (master) ? PANS::Data::masterController.set_text(0, 0, text.c_str()) : PANS::Data::partnerController.set_text(0, 0, text.c_str());;
       return ReturnResult::Success;
     }
 
@@ -177,7 +207,9 @@ namespace PANS
     ReturnResult ClearBrain()
     {
       lv_label_set_text(labelMessages, ""); //set text
+      lv_label_set_text(labelTitle, ""); //clear the title as well
       lv_obj_align(labelMessages, NULL, LV_ALIGN_IN_TOP_MID, 0, 0); //realign
+      lv_obj_align(labelTitle, NULL, LV_ALIGN_IN_TOP_MID, 0, 0); //realign
       return ReturnResult::Success;
     }
 

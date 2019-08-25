@@ -4,18 +4,7 @@ namespace PANS
 {
   namespace Data
   {
-    okapi::Controller masterController;
-  }
-
-  namespace Core
-  {
-    //initialization
-    ReturnResult Initialize(okapi::Controller controllerMaster)
-    {
-      //set data
-      PANS::Data::masterController = controllerMaster;
-
-      return ReturnResult::Success;
-    }
+    pros::Controller masterController(pros::E_CONTROLLER_MASTER);
+    pros::Controller partnerController(pros::E_CONTROLLER_PARTNER);
   }
 }

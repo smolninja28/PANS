@@ -1,12 +1,12 @@
 #pragma once
 #include "../../include/main.h"
-#include "../../include/okapi/api.hpp"
 
 namespace PANS
 {
   namespace Data
   {
-    extern okapi::Controller masterController;
+    extern pros::Controller masterController;
+    extern pros::Controller partnerController;
   }
   //core data
   enum class ReturnResult
@@ -16,10 +16,4 @@ namespace PANS
     GenericFailure,
     UserAborted
   };
-
-  namespace Core
-  {
-    //initialization
-    ReturnResult Initialize(okapi::Controller controllerMaster);
-  }
 }
