@@ -52,33 +52,43 @@ namespace PANS
       return LV_RES_OK;
     }
 
+    //prints the robot's status to the brain and the master controller
     ReturnResult PrintRobotStatus()
     {
       //create a string
-      std::string s;
+      std::string large;
+      std::string small;
       //are we connected to field control
       if(pros::competition::is_connected())
       {
         //are we disabled
         if(pros::competition::is_disabled())
         {
-          s.append("Connected|Disabled|");
+          large.append("Field|Off|");
+          small.append("Off|");
         }
         else
         {
-          s.append("Connected|Enabled|");
+          large.append("Field|On|");
+          small.append("On|");
         }
-
-        //what mode are we in
-        (pros::competition::is_autonomous()) ? s.append("Autonomous|") : s.append("Opcontrol|");
       }
-      else
-      {
-        s.append("");
-      }
-      
+      //what mode are we in
+      (pros::competition::is_autonomous()) ? large.append("Auto|") : large.append("Opcontrol|");
+      (pros::competition::is_autonomous()) ? small.append("Aut|") : small.append("Drv|");
+      //check controllers
+      (PANS::Data::masterController.is_connected()) ? large.append("MasterOK|") : large.append("");
+      (PANS::Data::partnerController.is_connected()) ? large.append("PartnerOK|") : large.append("");
+      (PANS::Data::masterController.is_connected()) ? small.append("M|") : small.append("");
+      (PANS::Data::partnerController.is_connected()) ? small.append("P|") : small.append("");
+      //battery level
+      large.append("Battery:" + std::to_string(static_cast<int>(pros::battery::get_capacity())) + "%,");
+      small.append(std::to_string(static_cast<int>(pros::battery::get_capacity())) + "%");
+      //battery temp
+      large.append(std::to_string(static_cast<int>(pros::battery::get_temperature())) + "°");
       //print it
-      MessageBrain(s);
+      MessageBrain(large);
+      MessageController(small);
       return ReturnResult::Success;
     }
 
@@ -132,6 +142,8 @@ namespace PANS
       doneDialog = false; //in dialog
       //set the text on the controller
       MessageController("Config|Abort:X");
+      //clear all messages
+      ClearBrain();
       //set the title
       lv_label_set_text(labelTitle, title.c_str()); //set text
       lv_obj_align(labelTitle, NULL, LV_ALIGN_IN_TOP_MID, 0, 0); //realign
@@ -141,8 +153,6 @@ namespace PANS
       //activate the buttons
       lv_btn_set_state(btnOption0, LV_BTN_STATE_REL);
       lv_btn_set_state(btnOption1, LV_BTN_STATE_REL);
-      //clear all messages
-      ClearBrain();
       //assign callbacks
       option0Callback = callback0;
       option1Callback = callback1;

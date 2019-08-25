@@ -25,7 +25,7 @@ namespace PANS
     ReturnResult ClearRendering();
     //shuts down object rendering
     ReturnResult StopRendering();
-    //prints the robot's status to the screen as a message
+    //prints the robot's status to the brain and the master controller
     ReturnResult PrintRobotStatus();
   }
 }
