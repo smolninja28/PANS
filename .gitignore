@@ -14,6 +14,6 @@ Makefile
 project.pros
 include/api.h
 include/main.h
-source/autonomous.cpp
-source/initialize.cpp
-source/opcontrol.cpp
+src/autonomous.cpp
+src/initialize.cpp
+src/opcontrol.cpp
