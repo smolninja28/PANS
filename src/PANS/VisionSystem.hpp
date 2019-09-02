@@ -1,8 +1,6 @@
-#pragma once
+#ifndef PANS_VISIONSYSTEM
+#define PANS_VISIONSYSTEM
 #include "Core.hpp"
-#include "UISystem.hpp"
-#include <deque>
-#include <algorithm>
 
 namespace PANS
 {
@@ -27,3 +25,4 @@ namespace PANS
     ReturnResult StopSigAveraging();
   }
 }
+#endif

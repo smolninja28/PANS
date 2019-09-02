@@ -95,6 +95,8 @@ namespace PANS
     //init
     ReturnResult Initialize()
     {
+      if(!Data::UISystem) //check if this system is allowed to run
+        return ReturnResult::UserAborted;
       if(isInitialized) //check if init has already run
         return ReturnResult::Success;
       labelTitle = lv_label_create(lv_scr_act(), NULL); //create the title
@@ -139,6 +141,8 @@ namespace PANS
     //make a config dialog on the brain screen. Title is the title for the screen, text is inside the button, calbacks execute upon selection
     ReturnResult ConfigDialog(std::string title, std::string option0, void (*callback0)(), std::string option1, void (*callback1)())
     {
+      if(!Data::UISystem) //check if this system is allowed to run
+        return ReturnResult::UserAborted;
       doneDialog = false; //in dialog
       //set the text on the controller
       MessageController("Config|Abort:X");
@@ -189,6 +193,8 @@ namespace PANS
     //post a message to the controller.  Text must be 16 characters or less
     ReturnResult MessageController(std::string text, bool master)
     {
+      if(!Data::UISystem) //check if this system is allowed to run
+        return ReturnResult::UserAborted;
       //resize the string to fit on the screen
       text.resize(16, ' ');
       //send the message to the proper controller
@@ -199,6 +205,8 @@ namespace PANS
     //appends a message to the brain
     ReturnResult MessageBrain(std::string text)
     {
+      if(!Data::UISystem) //check if this system is allowed to run
+        return ReturnResult::UserAborted;
       messageStrings.push_front(text); //add the text and a newline
       //check if the deque is getting too long
       if(messageStrings.size() == 11)
@@ -216,6 +224,8 @@ namespace PANS
     //clears the screen of the brain
     ReturnResult ClearBrain()
     {
+      if(!Data::UISystem) //check if this system is allowed to run
+        return ReturnResult::UserAborted;
       lv_label_set_text(labelMessages, ""); //set text
       lv_label_set_text(labelTitle, ""); //clear the title as well
       lv_obj_align(labelMessages, NULL, LV_ALIGN_IN_TOP_MID, 0, 0); //realign
@@ -226,6 +236,8 @@ namespace PANS
     //prepares the ui system for vision object rendering
     ReturnResult PrepareForRendering()
     {
+      if(!Data::UISystem) //check if this system is allowed to run
+        return ReturnResult::UserAborted;
       ClearBrain(); //clear the brain of messages
       return ReturnResult::Success;
     }
@@ -233,6 +245,8 @@ namespace PANS
     //asks the ui system to render an object
     ReturnResult RenderObject(int width, int height, int x, int y)
     {
+      if(!Data::UISystem) //check if this system is allowed to run
+        return ReturnResult::UserAborted;
       //clear messages
       ClearBrain();
       //create a new object
@@ -250,6 +264,8 @@ namespace PANS
     //asks the ui system to clear the screen of all rendered objects
     ReturnResult ClearRendering()
     {
+      if(!Data::UISystem) //check if this system is allowed to run
+        return ReturnResult::UserAborted;
       int size = renderObjects.size(); //get the number of objects
       for(int i = 0; i < size; ++i) //loop over all objects
       {
@@ -263,6 +279,8 @@ namespace PANS
     //shuts down object rendering
     ReturnResult StopRendering()
     {
+      if(!Data::UISystem) //check if this system is allowed to run
+        return ReturnResult::UserAborted;
       ClearRendering(); //clear off all objects
       MessageBrain("Visualization completed."); //go back to messaging
       return ReturnResult::Success;

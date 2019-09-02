@@ -154,12 +154,11 @@ namespace PANS
 
     pros::vision_object GetAveragedObject(int size, int sig)
     {
-      //search for the data with the signature
-      //std::vector<compute_sig_data>::iterator it = std::find_if(computeData.begin(), computeData.end(), [sig](const compute_sig_data & val){if(val.signature == sig){PANS::UISystem::MessageBrain("Equal");return true;}return false;});
-      //get the result
-      //compute_sig_data data = *it;
-      //the object
-      //compute_object_data obj = data.objects[size];
+      if(!Data::VisionSystem) //check if this system is allowed to run
+      {
+        pros::vision_object res;
+        return res;
+      }
       //lock the input data mutex
       computeInputMutex.take(TIMEOUT_MAX);
       //search for the signature in the input signatures
@@ -181,6 +180,8 @@ namespace PANS
     //start averaging vision signatures. Pass a vector of signature ids as ints
     ReturnResult StartSigAveraging(std::vector<int> sigs, int numObjects, int samples)
     {
+      if(!Data::VisionSystem) //check if this system is allowed to run
+        return ReturnResult::UserAborted;
       computeInputMutex.take(TIMEOUT_MAX); //grab the lock
       isComputing = true; //start computing averages
       isComputeInitialized = false; //reset buffers
@@ -196,6 +197,8 @@ namespace PANS
     //stop averaging all vision signatures
     ReturnResult StopSigAveraging()
     {
+      if(!Data::VisionSystem) //check if this system is allowed to run
+        return ReturnResult::UserAborted;
       isComputing = false; //stop computing averages
       isComputeInitialized = false; //reset buffers
       return ReturnResult::Success;
@@ -204,6 +207,8 @@ namespace PANS
     //initialize vision systems.  VisionPort is the port the vision sensor is plugged into
     ReturnResult Initialize(int visionPort)
     {
+      if(!Data::VisionSystem) //check if this system is allowed to run
+        return ReturnResult::UserAborted;
       sensorPort = visionPort; //store the port
       pros::Task averageTask(ComputeSigAveragesTaskFunction, (void*)"", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "ComputeSigAveragesTask"); //start the signature average computational task
       return ReturnResult::Success;
@@ -212,6 +217,8 @@ namespace PANS
     //visualize sensor detection on the brain screen.
     ReturnResult VisualizeSignature(int signature)
     {
+      if(!Data::VisionSystem) //check if this system is allowed to run
+        return ReturnResult::UserAborted;
       //set the controller text
       PANS::UISystem::MessageController("Visual|Done:X");
       //clear the brain of messages
@@ -246,6 +253,8 @@ namespace PANS
     //visualize sensor detection on the brain screen.  signature is the sig to read.
     ReturnResult VisualizeAveragedSignature(int signature)
     {
+      if(!Data::VisionSystem) //check if this system is allowed to run
+        return ReturnResult::UserAborted;
       //set the controller text
       PANS::UISystem::MessageController("Visual|Done:X");
       //clear the brain of messages

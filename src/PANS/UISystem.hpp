@@ -1,7 +1,6 @@
-#pragma once
+#ifndef PANS_UISYSTEM
+#define PANS_UISYSTEM
 #include "Core.hpp"
-#include <vector>
-#include <deque>
 
 namespace PANS
 {
@@ -29,3 +28,4 @@ namespace PANS
     ReturnResult PrintRobotStatus();
   }
 }
+#endif
