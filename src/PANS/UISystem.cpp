@@ -247,6 +247,9 @@ namespace PANS
     {
       if(!Data::UISystem) //check if this system is allowed to run
         return ReturnResult::UserAborted;
+      //check to make sure arguments are okay
+      if(width < 0 || height < 0 || x < 0 || y < 0)
+        return ReturnResult::InvaildParameters;
       //clear messages
       ClearBrain();
       //create a new object

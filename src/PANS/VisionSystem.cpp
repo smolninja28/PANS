@@ -161,8 +161,22 @@ namespace PANS
       }
       //lock the input data mutex
       computeInputMutex.take(TIMEOUT_MAX);
+      if(size > computeObjects || size < 0 || sig < 0) //check arguments
+      {
+        //release Mutex
+        computeInputMutex.give();
+        pros::vision_object res;
+        return res;
+      }
       //search for the signature in the input signatures
       std::vector<int>::iterator it = std::find(computeSignatures.begin(), computeSignatures.end(), sig);
+      if(it == computeSignatures.end()) //check arguments
+      {
+        //release Mutex
+        computeInputMutex.give();
+        pros::vision_object res;
+        return res;
+      }
       //get it's index
       int index = std::distance(computeSignatures.begin(), it);
       //release Mutex
@@ -190,7 +204,7 @@ namespace PANS
       computeSignatures = sigs; //set signatures
       computeInputMutex.give(); //release the lock
       //give the compute thread time to initially process by hanging the main thread
-      pros::delay(20);
+      pros::delay(100);
       return ReturnResult::Success;
     }
 
@@ -239,7 +253,7 @@ namespace PANS
           return ReturnResult::Success; //begone
         }
         //loop over how many objects need to be rendered
-        for(int i = 0; i < sensor.get_object_count(); ++i)
+        for(int i = 0; i < 3; ++i)
         {
           //read the vision data in
           pros::vision_object rtn = sensor.get_by_sig(i, signature);
@@ -264,8 +278,8 @@ namespace PANS
       //prepare the ui system for rendering
       PANS::UISystem::PrepareForRendering();
       //start the averaging system
-      int numObjects = 1;
-      std::vector<int> sigs(1, 1);
+      int numObjects = 3;
+      std::vector<int> sigs = {signature};
       StartSigAveraging(sigs, numObjects);
       while(true) //control loop
       {
