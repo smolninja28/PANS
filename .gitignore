@@ -6,6 +6,7 @@
 /include/display
 /include/pros
 /include/okapi
+/PANS_Starter_Project
 
 # File ignores
 common.mk
