@@ -73,7 +73,7 @@ namespace PANS
           small.append("On|");
         }
       }
-      //what mode are we in
+      //check mode
       (pros::competition::is_autonomous()) ? large.append("Auto|") : large.append("Opcontrol|");
       (pros::competition::is_autonomous()) ? small.append("Aut|") : small.append("Drv|");
       //check controllers
@@ -233,7 +233,7 @@ namespace PANS
       return ReturnResult::Success;
     }
 
-    //prepares the ui system for vision object rendering
+    //prepares the UI system for vision object rendering
     ReturnResult PrepareForRendering()
     {
       if(!Data::UISystem) //check if this system is allowed to run
@@ -242,7 +242,7 @@ namespace PANS
       return ReturnResult::Success;
     }
 
-    //asks the ui system to render an object
+    //asks the UI system to render an object
     ReturnResult RenderObject(int width, int height, int x, int y)
     {
       if(!Data::UISystem) //check if this system is allowed to run
@@ -264,7 +264,7 @@ namespace PANS
       return ReturnResult::Success;
     }
 
-    //asks the ui system to clear the screen of all rendered objects
+    //asks the UI system to clear the screen of all rendered objects
     ReturnResult ClearRendering()
     {
       if(!Data::UISystem) //check if this system is allowed to run
