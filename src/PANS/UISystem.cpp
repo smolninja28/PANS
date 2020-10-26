@@ -5,7 +5,7 @@ namespace PANS
   namespace UISystem
   {
     //variables
-    bool isInitialized = false; //is the ui system initialized
+    bool isInitialized = false; //is the UI system initialized
     lv_obj_t* labelTitle; //the screen title
     lv_obj_t* btnOption0; //the first option button
     lv_obj_t* labelOption0; //the first option label
